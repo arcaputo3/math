@@ -1,0 +1,551 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{listingsutf8}
+\usepackage[utf8]{inputenc} % Anonymized submission
+% \documentclass{colt2013} % Include author names
+
+\usepackage{hyperref}
+\usepackage{pdfsync}
+\usepackage{dsfont}
+\usepackage{color}
+\usepackage{amsthm} 
+% end of Dejan's packages 
+%\usepackage{makeidx}
+\usepackage{braket}
+\usepackage{tikz}
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{caption}
+%\usepackage{comment}
+%\usepackage{subcaption}
+\usepackage{pb-diagram}
+%\usepackage{amsfonts}
+\usepackage{amssymb}%
+\usepackage{listingsutf8}
+\setcounter{MaxMatrixCols}{30}
+\providecommand{\U}[1]{\protect\rule{.1in}{.1in}}
+
+% Packages hyperref and algorithmic misbehave sometimes.  We can fix
+% this with the following command.
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+\newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-10mu\perp$}}}}
+\newtheorem{counter}{Counter}[section]
+\newtheorem{theorem}[counter]{Theorem}
+\newtheorem{definition}[counter]{Definition}
+\newtheorem{lemma}[counter]{Lemma}
+\newtheorem{proposition}[counter]{Proposition}
+\newtheorem{claim}[counter]{Claim}
+\newtheorem{corollary}[counter]{Corollary}
+\theoremstyle{remark}
+% This sets the font so that font is not in italics
+\newtheorem{remark}[counter]{Remark}
+
+
+
+% The following packages will be automatically loaded:
+% amsmath, amssymb, natbib, graphicx, url, algorithm2e
+
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\rd}{\mathrm{d}}
+\newcommand{\p}{\mathbf{p}}
+\newcommand{\tub}{T_{\veps}}
+\newcommand{\tubn}{T_{\veps_n}}
+\newcommand{\tubo}{T_{\veps}^+}
+\newcommand{\tubno}{T_{\veps_n}^+}
+\newcommand{\tubi}{T_{\veps}^-}
+\newcommand{\tubni}{T_{\veps_n}^-}
+\newcommand{\q}{\mathbf{q}}
+%\newcommand{\gammato}{\stackrel{\Gamma}{\longrightarrow}}
+\newcommand{\gammato}{\longrightarrow_{\Gamma}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\cc}{C}
+\newcommand{\I}{\mathbb{I}}
+\newcommand{\Q}{D}
+\newcommand{\D}{D}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\dom}{D}
+\newcommand{\re}{\mathrm{e}}
+\newcommand{\te}{\textrm}
+\newcommand{\tacka}{\,\cdot\,}
+\renewcommand{\S}{\mathcal{S}}
+\newcommand{\veps}{\varepsilon}
+\newcommand{\tC}{\widetilde{\mathcal{C}}}
+\newcommand{\tTV}{\widetilde{TV}}
+%\newcommand{\GP}[1]{ \|#1\|_{\mathrm{TV}(\veps_n) } }
+\newcommand{\GP}[1]{\mathrm{GPer}_{n,\veps_n}(#1)}
+\newcommand{\GPe}[1]{\GPem_{n,\veps_n}(#1)}
+% \newcommand{\NLTV}[1]{ \|#1\|_{\mathrm{NLTV}(\veps_n) } }
+\newcommand{\NLTV}[1]{ \Pem_{\veps_n}( #1) }
+\newcommand{\NLTVe}[1]{ \Pem_{\veps_n}( #1) }
+\newcommand{\NLTVenon}[1]{ \Pem_{\veps}( #1) }
+\newcommand{\NLTVen}[1]{ \Pem_{\veps_n}( #1) }
+\newcommand{\BV}[1]{ \Pem(#1) }
+\newcommand{\indep}{\rotatebox[origin=c]{90}{$\models$}}
+
+\usepackage{times}
+\usepackage{geometry}
+\geometry{
+	a4paper,
+	total={170mm,257mm},
+	left=20mm,
+	top=20mm,
+}
+\title{All of Statistics - Key Concepts}
+\author{Albert Richard Caputo}
+\date{November 2018}
+
+\begin{document}
+\maketitle
+\section{Probability}
+\subsection{Sample Space}
+A sample space $\Omega$ is the set of possible outcomes of an experiment. Points $\omega$ in $\Omega$ are called sample outcomes, realizations, or elements. Subsets of $\Omega$ are called Events.
+
+\subsection{Probability Distribution}
+\begin{definition}
+	We will assign a real number $\Prob(A)$ to every event $A$, called the probability of $A$. We also call $\Prob$ a probability distribution or probability measure if it satisfies the following axioms:
+	\begin{enumerate}
+		\item \textbf{Axiom 1}: $\Prob(A) \geq 0$ for every $A$.
+		\item \textbf{Axiom 2}: $\Prob(\Omega) = 1.$
+		\item \textbf{Axiom 3}: If $A_1, A_2, ...$ are disjoint, then
+		\[
+		\Prob\Big(\cup_{i=1}^{\infty}A_i\Big) = \sum_{i=1}^{\infty} \Prob(A_i).
+		\]
+	\end{enumerate}
+\end{definition}
+\begin{lemma}
+	For any events $A$ and $B$,
+	\[
+	\Prob(A \cup B) = \Prob(A) + \Prob(B) - \Prob(A \cap B)
+	\]
+\end{lemma}
+\begin{remark}
+	If $\Omega$ is finite and if each outcome is equally likely, then 
+	\[
+	\Prob(A) = \frac{|A|}{|\Omega|} 
+	\]
+	which is called a uniform probability distribution. Also, it is always true that 
+	\[
+	\Prob(A) = 1 - \Prob(A^C)
+	\]
+	where $A^C$ is the complement of $A$.\\
+\end{remark}
+
+\noindent For convenience, define $\binom{n}{k} = \frac{n!}{k!(n-k)!}$ to read $n$ choose $k$ as the number of distinct ways of choosing $k$ objects from $n$.
+
+\subsection{Independent Events}
+\begin{definition}
+	Two events $A$ and $B$ are independent if (and only if)
+	\[
+	\Prob(A \cap B) = \Prob(A)\Prob(B)
+	\]
+	and write $A \indep B$. A set of events $\{A_i : i \in I\}$ is independent if
+ 	\[
+ 	\Prob\Bigg(\cap_{i \in J}A_i\Bigg)	= \prod_{i \in J}\Prob(A_i) .
+ 	\]
+\end{definition}
+\space
+\noindent Some important things to note about independence:
+\begin{enumerate}
+	\item Independence is sometimes assumed and sometimes derived.
+	\item Disjoint events with positive probability are not independent.
+\end{enumerate}
+
+\subsection{Conditional Probability}
+\begin{definition}
+	If $\Prob(B)>0$, we define the conditional probability of $A$ given $B$ as
+	\[
+	\Prob(A|B) = \frac{\Prob(A \cap B)}{\Prob(B)}.
+	\]
+	In simplest terms, $\Prob(A|B)$ is the fraction of times $A$ occurs among those in which $B$ occurs.
+\end{definition}
+\noindent Some important things to note about conditional probabilitty:
+\begin{enumerate}
+	\item $\Prob(\cdot|B)$ satisfies the axioms of probability for fixed $B$. In general. $\Prob(A|\cdot)$ does not satisfy the axioms of probability for fixed $A$.
+	\item In general, $\Prob(A|B) \neq \Prob(B|A)$.
+	\item $A$ and $B$ are independent if and only if $\Prob(A|B) = \Prob(A)$.
+	\item \[
+	\begin{split}
+	\Prob(A \cap B) = \Prob(AB) &= \Prob(A|B)\Prob(B) \\
+				&= \Prob(B|A)\Prob(A)
+	\end{split}
+	\]
+\end{enumerate}
+\subsection{Bayes' Theorem}
+\begin{theorem}[The Law of Total Probability]
+	Let $A_1,...,A_k$ be a partition of $\Omega$. Then, for every event $B$,
+	\[
+	\Prob(B) = \sum_{i=1}^k \Prob(B|A_i)\Prob(A_i).
+	\]
+\end{theorem}
+\begin{proof}
+	Define $C_j = B A_j$ and note that $C_1, ..., C_k$ are disjoin and $B = \cup_{j=1}^k C_j$. Hence,
+	\[
+	\Prob(B) = \sum_j\Prob(C_j) = \sum_j \Prob(B A_j) = \sum_{j} \Prob(B|A_j)\Prob(A_j)
+	\]
+	since $\Prob(B A_j) = \Prob(B|A_j)\Prob(A_j)$ by the definition of conditional probability.
+\end{proof}
+\begin{theorem}[Bayes' Theorem]
+	Let $A_1, ..., A_k$ be a partition of $\Omega$ such that $\Prob(A_i) > 0$ for each $i$. If $\Prob(B) > 0$ them, for each $i = 1,...,k$,
+	\[
+	\Prob(A_i|B) = \frac{\Prob(B|A_i)\Prob(A_i)}{\sum_{j} \Prob(B|A_j)\Prob(A_j)}.
+	\]
+\end{theorem}
+\begin{remark}
+	We call $\Prob(A_i)$ the prior probability of $A$ and $\Prob(A_i|B)$ the posterior probability of $A$.
+\end{remark}
+\begin{proof}
+	We apply the definition of conditional probability twice, followed by the law of total probability:
+	\[
+	\Prob(A_i|B) = \frac{\Prob(A_iB)}{\Prob(B)} = \frac{\Prob(B|A_i)\Prob(A_i)}{\Prob(B)} =  \frac{\Prob(B|A_i)\Prob(A_i)}{\sum_{j} \Prob(B|A_j)\Prob(A_j)}
+	\]
+\end{proof}
+
+\section{Random Variables}
+\begin{definition}
+	A random variable is a mapping
+	\[
+	X: \Omega \to \R
+	\]
+	that assigns a real number $X(\omega)$ to each outcome $\omega$.
+\end{definition}
+\subsection{Distribution Functions and Proabability Functions}
+Given a random variable $X$, we define the cumulative distribution function as follows.
+\begin{definition}
+	The cumulative distribution function, or CDF, is the function $F_X : \R \to [0,1]$ defined by
+	\[
+	F_X(x) = \Prob(X \leq x)
+	\]
+\end{definition}
+
+\begin{theorem}
+	Let $X$ have CDF F and let $Y$ have CDF $G$. If $F(x) = G(x)$ for all $x$, then $\Prob(X \in A) = \Prob(Y \in A)$ for all $A$.
+\end{theorem}
+
+\begin{theorem}
+	A function $F$ mapping the real line to $[0,1]$ is a CDF for probability $\Prob$ if and only if $F$ satisfies the following conditions:
+	\begin{enumerate}
+		\item $F$ is non-decreasing: $x_1 < x_2$ implies $F(x_1) \leq F(x_2)$.
+		\item $F$ is normalized:
+		\[
+		\begin{split}
+		\lim_{x \to -\infty} F(X) &= 0 \\
+		\lim_{x \to \infty} F(X) &= 1
+		\end{split}
+		\]
+		\item $F$ is right-continuous: $F(x) = F(x^+)$ for all $x$, where
+		\[
+		F(x^+) = \lim_{y \to x, y >x} F(y);
+		\]
+	\end{enumerate}
+\end{theorem}
+\begin{proof}
+	Suppose that $F$ is a CDF. Let us show that (3) holds. Let $x$ be a real number and let $y_1, y_2, ...$ be a sequence of numbers such that $y_1 > y_2 > ...$ and $\lim_i y_i = x$. Let $A_i = (-\infty, y_i]$ and let $A = (-\infty,x]$. Note that $A = \cap_{i=1}^{\infty} A_i$ and also note that $A_1 \supset A_2 \supset ...$. Because the events are monotone, $\lim_i \Prob(A_i) = \Prob(\cap_i A_i)$. Thus,
+	\[
+	F(x) = \Prob(A) = \Prob\Big( \cap_i A_i \Big) = \lim_i \Prob(A_i) =\lim_i F(y_i) = F(x^+)
+	\]
+	Showing (1) and (2) is similar. Proving the other direction requires some deep tools in analysis.  
+\end{proof}
+
+\begin{definition}
+	$X$ is discrete if it takes countably many values $\{x_1, x_2, ...\}$. We define the probability function or probability mass function for $X$ by $f_X(x) = \Prob(X = x)$.
+\end{definition}
+Thus, $f_X(x) \geq 0$ for all $x \in \R$ and $\sum_i f_X(x_i) = 1$. Sometimes we write $f$ instead of $f_X$. The CDF of $X$ is related to $f_X$ by 
+\[
+F_X(x) = \Prob(X \leq x) = \sum_{x_i \leq x} f_X(x_i).
+\]
+
+\begin{definition}
+	A random variable $X$ is continuous if there exists a function $f_X$ such that $f_X(x) \geq 0$ for all $x$, $\int_{-\infty}^{\infty}f_X(x)dx = 1$ and for every $a \leq b$,
+	\[
+	\Prob(a < X < b) = \int_a^b f_X(x) dx.
+	\]
+	The function $f_X$ is called a probability density function (PDF). We have that
+	\[
+	F_X(x) = \int_{-\infty}^x f_X(t)dt
+	\]
+	and $f_X(x) = F_X'(x)$ at all points $x$ at which $F_X(x)$ is differentiable.
+\end{definition}
+
+\begin{lemma}
+	Let $F$ be the CDF for a random variable $X$. Then:
+	\begin{enumerate}
+		\item $\Prob(X = x) = F(x) - F(x^-)$ where $F(x^-) = \lim_{y\uparrow x}F(y)$
+		\item $\Prob(x < X \leq y) = F(y) - F(x)$
+		\item $\Prob(X>x) = 1-F(x)$
+		\item If $X$ is continuous then
+		\[
+		\begin{split}
+		F(b)-F(a) 	&= \Prob(a < X < b) = \Prob(a \leq X < b) \\
+					&= \Prob(a < X \leq b) = \Prob(a \leq X \leq b)
+		\end{split}
+		\] 
+	\end{enumerate}
+\end{lemma}
+Let us now define the inverse CDF (or quantile function).
+\begin{definition}
+	Let $X$ be a random variable with CDF $F$. The inverse CDF or quantile function is defined by
+	\[
+	F^{-1}(q) = \text{inf} \{x: F(x) > q\}
+	\]
+	for $q \in [0,1]$. If $F$ is strictly increasing and continuous then $F^{-1}(q)$ is the unique real number $x$ such that $F(x) = q$.
+\end{definition}
+\begin{remark}
+	Two random variables are equal in distribution, written $X =^d Y$, if $F_X(x) = F_Y(x)$ for all $x$. This does not mean $X$ and $Y$ are equal. Rather, it means that all probability statements about $X$ and $Y$ will be the same.  
+\end{remark}
+
+\subsection{Some Important Discrete Distributions}
+\textsc{The Point Mass Distribution}. $X$ has a point mass distribution at $a$, written $X \sim \delta_a$, if $\Prob(X=a)=1$ in which case
+\[
+F(x) = \begin{cases}
+0 \hspace{3mm} &x < a \\
+1 \hspace{3mm} &x \geq a.
+\end{cases}
+\]
+The probability mass function is $f(x) = 1$ for $x=a$ and 0 otherwise.
+\\
+
+\noindent\textsc{The Discrete Uniform Distribution}. Let $k>1$ be a given integer. Suppose that $X$ has a probability mass function given by
+\[
+f(x) = \begin{cases}
+1/k \hspace{3mm} &\text{for } x = 1,...,k \\
+0 \hspace{3mm} &\text{otherwise}.
+\end{cases}
+\]
+We say that $X$ has a uniform distribution on $\{1,...,k\}$. \\
+
+\noindent\textsc{The Bernoulli Distribution}. Let $X$ represent a binary coin flip. Then $\Prob(X=1) = p$ and $\Prob(X=0) = 1-p$ for some $p\in[0,1]$. We say that $X$ has a Bernoulli distribution written $X \sim \text{Bernoulli}(p)$. The probability function is 
+\[
+f(x) = p^x(1-p)^{1-x}
+\]
+for $x \in \{0,1\}$.\\
+
+\noindent\textsc{The Binomial Distribution}. Suppose we have a coin which falls heads up with probability $p$ for some $0 \leq p \leq 1$. Flip the coin $n$ times and let $X$ be the number of heads. Assume the tosses are independent. Let $f(x) = \Prob(X=x)$ be the mass function. It can be shown that
+\[
+f(x) = \begin{cases}
+\binom{n}{x}p^x(1-p)^{n-x} \hspace{3mm} &\text{for } x = 0,...,n \\
+0 \hspace{3mm} &\text{otherwise}.
+\end{cases}
+\]
+A random variable with this mass function is called a Binomial random variable and we write $X \sim \text{Binomial}(n,p)$. If $X_1 \sim \text{Binomial}(n_1, p)$ and $X_2 \sim \text{Binomial}(n_2, p)$ then $X_1 + X_2 \sim \text{Binomial}(n_1+n_2, p)$. \\
+
+\noindent\textsc{The Geometric Distribution}. $X$ has a geometric distribution with parameter $p\in(0,1)$, written $X \sim \text{Geom}(p)$, if 
+\[
+\Prob(X=k) = p(1-p)^{k-1}, \hspace{3mm} k\geq 1.
+\]
+We have that 
+\[
+\sum_{k=1}^{\infty}\Prob(X=k) = p \sum_{k=1}^{\infty}(1-p)^k = \frac{p}{1-(1-p)} = 1.
+\]
+Think of $X$ as the number of flips needed until the first head when flipping a coin. \\
+
+\noindent\textsc{The Poisson Distribution}. $X$ has a Poisson distribution with parameter $\lambda$, written $X \sim \text{Poisson}(\lambda)$ if 
+\[
+f(x) = e^{-\lambda} \frac{\lambda^x}{x!}, \hspace{3mm} x\geq0.
+\]
+Note that 
+\[
+\sum_{x=0}^{\infty}f(x)=e^{-\lambda} \sum_{x=0}^{\infty} \frac{\lambda^x}{x!} = e^{-\lambda}e^{\lambda} = 1.
+\]
+The Poisson is often used as a model for counts of rare events. If $X_1 \sim \text{Poisson}(\lambda_1)$ and $X_2 \sim \text{Poisson}(\lambda_2)$ then $X_1 + X_2 \sim \text{Poisson}(\lambda_1+\lambda_2)$.
+
+\subsection{Some Important Continuous Distributions}
+\textsc{The Uniform Distribution}. $X$ has a Uniform$(a,b)$ distribution, written $X \sim$ Uniform$(a,b)$, if
+\[
+f(x) = \begin{cases}
+\frac{1}{b-a} \hspace{3mm} &\text{for } x \in [a,b] \\
+0 \hspace{3mm} &\text{otherwise}
+\end{cases}
+\]
+where $a<b$. The distribution function is
+\[
+F(x) = \begin{cases}
+0 \hspace{3mm} &\text{for } x<a \\
+\frac{x-a}{b-a} \hspace{3mm} &\text{for } x \in [a,b] \\
+1 \hspace{3mm} &\text{for } x>b.
+\end{cases}
+\]\\
+
+\noindent\textsc{Normal (Gaussian)}. $X$ has a Normal (Gaussian) distribution with parameters $\mu$ and $\sigma$, denoted by $X \sim N(\mu, \sigma^2)$, if 
+\[
+f(x) = \frac{1}{\sigma\sqrt{2 \pi}} \text{exp}\big(-\frac{(x-\mu)^2}{2 \sigma}\big), \hspace{3mm} x\in\R
+\]
+where $\mu \in \R$ and $\sigma > 0$. The parameter $\mu$ is the center, or mean, of the distribution and $\sigma$ is the spread, or standard deviation, of the distribution. We say that $X$ has a standard Normal distribution if $\mu = 0$ and $\sigma = 1$. Traditionally, a standard normal random variable is denoted by $Z$. The PDF and CDF of a standard normal are denoted by $\phi(z)$ and $\Phi(z)$, respectively. Some useful facts:
+\begin{enumerate}
+	\item If $X \sim N(\mu,\sigma^2)$, then $Z = \frac{X-\mu}{\sigma} \sim N(0,1)$.
+	\item If $Z \sim N(0,1)$, then $X = \mu + \sigma Z \sim N(\mu, \sigma^2)$.
+	\item If $X_i = N(\mu_i, \sigma_i^2), i=1,...,n$ are independent, then 
+	\[
+	\sum_{i=1}^{n}X_i \sim N\big(\sum_{i=1}^{n}\mu_i,\sum_{i=1}^{n}\sigma_i^2\big).
+		\]
+\end{enumerate}
+
+It follows from (1) that if $X \sim N(\mu,\sigma^2)$, then 
+\[
+\begin{split}
+\Prob(a < X <b) 	&= \Prob(\frac{a-\mu}{\sigma} < Z < \frac{b-\mu}{\sigma}) \\
+&= \Phi(\frac{a-\mu}{\sigma}) - \Phi(\frac{b-\mu}{\sigma}). 
+\end{split}
+\]
+Thus we can compute any probabilities we want so long as we can compute the CDF $\Phi(z)$ of the standard Normal. \\
+
+\noindent\textsc{The Exponential Distribution}. $X$ has an Exponential Distribution with parameter $\beta$, denoted by $X \sim \text{Exp}(\beta)$, if
+\[
+f(x) = \frac{1}{\beta} e^{-\frac{x}{\beta}}, \hspace{3mm} x>0.
+\]
+The exponential distribution is used to model the lifetimes of electronic components and the waiting times between rare events.\\
+
+\noindent\textsc{The Gamma Distribution}. For $\alpha > 0$, the Gamma function is defined by $\Gamma(\alpha) = \int_0^{\infty}y^{\alpha-1}e^{-y} dy$. $X$ has a Gamma distribution with parameters $\alpha$ and $\beta$, denoted by $X \sim$ Gamma$(\alpha,\beta)$, if 
+\[
+f(x) = \frac{1}{\beta^{\alpha} \Gamma(\alpha)}x^{\alpha-1}e^{-\frac{x}{\beta}}, \hspace{3mm} x > 0
+\]
+where $\alpha, \beta > 0$. The exponential distribution is just a Gamma$(1,\beta)$ distribution. If $X_i \sim$ Gamma$(\alpha_i, \beta)$ are independent, then $\sum_{i=1}^{n} X_i \sim$ Gamma$(\alpha_i, \beta)$.\\
+
+\noindent\textsc{$t$ and Cauchy Distribution}. $X$ has a $t$ distribution with $v$ degrees of freedom, written $X \sim t_v$ if 
+\[
+f(x) = \frac{\Gamma(\frac{v+1}{2})}{\Gamma(\frac{v}{2})} \frac{1}{(1 + \frac{x^2}{v})^{\frac{v+1}{2}}}.
+\]
+The $t$ distribution is similar to a Normal but it has thicker tails. In fact, the Normal corresponds to a $t$ with $v=\infty$. The Cauchy distribution is a special case of the $t$ distribution corresponding to $v =1$. The density is 
+\[
+f(x) = \frac{1}{\pi(1 + x^2)}.
+\]\\
+
+\noindent\textsc{The $\chi^2$ Distribution}. $X$ has a $\chi^2$ distribution with $p$ degrees of freedom, written $X \sim \chi_p^2$, if 
+\[
+f(x) = \frac{1}{\Gamma(\frac{p}{2})2^{\frac{p}{2}}} x^{\frac{p}{2}-1} e^{-\frac{x}{2}}, \hspace{3mm} x>0.
+\]
+If $Z_1, ..., Z_p$ are independent standard Normal random variables then $\sum_{i=1}^p Z_i^2 \sim \chi_p^2$.
+
+\subsection{Bivariate Distributions}
+Given a pair of discrete random variables $X$ and $Y$, define the join mass function by $f(x,y) = \Prob(X=x \text{ and } Y=y) = \Prob(X=x,Y=y)$. \\
+
+\noindent In the continuous case, we call a function $f(x,y)$ a PDF for the random variables $(X,Y)$ if 
+\begin{enumerate}
+	\item $f(x,y) \geq 0$ for all $(x,y)$,
+	\item $\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} f(x,y) dxdy = 1$ and, 
+	\item for any set $A \subset \R \times \R$, $\Prob((X,Y) \in A) = \int \int_A f(x,y)dxdy$.
+\end{enumerate}
+
+\subsection{Marginal Distributions}
+\begin{definition}
+	If $(X,Y)$ have joint distribution with mass function $f_{X,Y}$, then the marginal mass function for $X$ is defined by
+	\[
+	f_X(x) = \Prob(X=x) = \sum_y \Prob(X=x,Y=y) = \sum_y f(x,y)
+	\]
+	and the marginal mass function for $Y$ is defined by 
+	\[
+	f_Y(y) = \Prob(Y=y) = \sum_x \Prob(X=x,Y=y) = \sum_x f(x,y).
+	\]
+	
+	\noindent For continuous random variables, the marginal densities are 
+	\[
+	f_X(x) = \int f(x,y)dy
+	\]
+	and 
+	\[
+	f_Y(y) = \int f(x,y)dx.
+	\]
+	The corresponding marginal distribution functions are denoted by $F_X$ and $F_Y$.
+\end{definition}
+
+\subsection{Independent Random Variables}
+\begin{definition}
+	Two random variables $X$ and $Y$ are independent if, for every $A$ and $B$,
+	\[
+	\Prob(X \in A, Y \in B) = \Prob(X \in A)\Prob(Y \in B)
+	\]
+	and we write $X \indep Y$. Otherwise we say $X$ and $Y$ are dependent.
+\end{definition}
+
+\begin{theorem}
+	Let $X$ and $Y$ have joint PDF $f_{X,Y}$. Then $X \indep Y$ if and only if $f_{X,Y}(x,y) = f_X(x)f_Y(y)$ for all values of $x$ and $y$.
+\end{theorem}
+
+\subsection{Conditional Distributions}
+\begin{definition}
+	The conditional probability mass function is
+	\[
+	f_{X|Y}(x|y) = \Prob(X=x|Y=y) = \frac{\Prob(X=x,Y=y)}{\Prob(Y=y)} = \frac{f_{X,Y}(x,y)}{f_Y(y)}
+	\]
+	if $f_Y(y) > 0$. \\
+	
+	\noindent For continuous random variables, the conditional probability density function is
+	\[
+	f_{X|Y}(x|y) = \frac{f_{X,Y}(x,y)}{f_Y(y)}
+	\]
+	assuming that $f_Y(y) > 0$. Then,
+	\[
+	\Prob(X \in A|Y=y) = \int_A f_{X|Y}(x|y)dx.
+	\]
+\end{definition}
+
+\subsection{Multivariate Distributions and IID Samples}
+Let $X = (X_1,...,X_n)$ where $X_1,...X_n$ are random variables. We call $X$ a random vector. Let $f(x_1,...,x_n)$ denote the PDF. It is possible to define their marginals, conditionals, etc. much the same way as in the bivariate case. We say that $X_1,...,X_n$ are independent if, for every $A_1,...,A_n$,
+\[
+\Prob(X_1 \in A_1,...,X_n \in A_n) = \prod_{i=1}^{n}\Prob(X_i \in A_i).
+\]
+It suffices to check that 
+\[
+f(x_1,...,x_n) = \prod_{i=1}^{n} f_{X_i}(x_i)
+\]
+
+\begin{definition}
+	If $X_1,...,X_n$ are independent and each has the same marginal distribution with CDF $F$, we say that $X_1,...,X_n$ are IID (independent and identically distributed) and we write
+	\[
+	X_1,...,X_n \sim F.
+	\]
+	If $F$ has density $f$ we also write $X_1,...,X_n \sim f$. We also call $X_1,...,X_n$ a random sample of size $n$ from $F$.
+\end{definition}
+\noindent See All of Statistics p.39-p.40 for some important multivariate distributions.
+
+\subsection{Transformations of Random Variables}
+Suppose that $X$ is a random variable with PDF $f_X$ and CDF $F_X$. Let $Y=r(X)$ be a function of $X$. \\
+
+\noindent Three steps for transformations:
+\begin{enumerate}
+	\item For each $y$, find the set $A_y = \{x: r(x) \leq y\}$.
+	\item Find the CDF 
+	\[
+	\begin{split}
+	F_Y(y) 	&= \Prob(Y \leq y) = \Prob(r(X) \leq y) \\
+			&= \Prob(\{x; r(x) \leq y\}) \\
+			&= \int_{A_y} f_X(x)dx.
+	\end{split}
+	\]
+	\item The PDF $f_Y(y) = F_Y'(y)$. 
+\end{enumerate}
+When $r$ is strictly monotone increasing or strictly monotone decreasing then $r$ has an inverse $s = r^{-1}$ and in this case one can show that
+\[
+f_Y(y) = f_X(s(y))\Bigg|\frac{ds(y)}{dy}\Bigg|
+\]
+\subsection{Transformations of Several Random Variables}
+Let $Z = r(X,Y)$ be the function of interest.
+\noindent Three steps for transformations:
+\begin{enumerate}
+	\item For each $z$, find the set $A_y = \{(x,y): r(x,y) \leq z\}$.
+	\item Find the CDF 
+	\[
+	\begin{split}
+	F_Z(y) 	&= \Prob(Z \leq z) = \Prob(r(X,Y) \leq z) \\
+	&= \Prob(\{(x,y); r(x,y) \leq z\}) \\
+	&= \int\int_{A_y} f_{X,Y}(x,y)dxdy.
+	\end{split}
+	\]
+	\item The PDF $f_Z(z) = F_Z'(z)$. 
+\end{enumerate}
+\end{document}
